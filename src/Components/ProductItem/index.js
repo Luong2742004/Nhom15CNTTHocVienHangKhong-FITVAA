@@ -1,26 +1,38 @@
-import Rating from '@mui/material/Rating';
+import React from 'react';
 
-const ProductItem =(props)=>{
-    return(
-        <div className={`productItem ${props.itemView}`}>
-            <div className="imgWrapper">
-                <img src="https://tse1.mm.bing.net/th?id=OIP.s5j-LFUHJm7b-wbqA0dSPwHaE8&pid=Api&P=0&h=180"
-                className="w-100"/> 
-            </div>
+const ProductItem = (props) => {
+  const { product } = props;
 
-            <div className="info">
-                <h4>Điều hoà Panasonic Inverter 1 HP VSD-C12K</h4>
-                <span className="text-sussess d-block">Còn hàng</span>
-                <Rating className="mt-2 mb-2" name="read-only" value={5} readOnly size="small" precision={0.5} />
+  // Kiểm tra nếu product không tồn tại hoặc bị undefined
+  if (!product || typeof product !== 'object') {
+    return <div className="productItem">Dữ liệu sản phẩm không hợp lệ</div>;
+  }
 
-                <div className="d-flex">
-                <span className="Price text-danger">5,600,000đ</span>
-                </div>
-            </div>
+  const { img, name, price } = product;
 
+  // Định dạng giá sản phẩm (VND)
+  const priceFormatted = price ? price.toLocaleString('vi-VN') + 'đ' : 'Liên hệ';
+
+  return (
+    <div className={`productItem ${props.itemView || ''}`}>
+      <div className="imgWrapper">
+        <img 
+          src={img || 'https://via.placeholder.com/150'} 
+          className="w-100" 
+          alt={name || 'Tên sản phẩm'} 
+        />
+      </div>
+
+      <div className="info">
+        <h4>{name || 'Tên sản phẩm'}</h4>
+        <div className="d-flex">
+          <span className="Price text-danger">
+            {priceFormatted}
+          </span>
         </div>
-
-    )
+      </div>
+    </div>
+  );
 }
 
-export default ProductItem
+export default ProductItem;
