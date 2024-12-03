@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProduct } from "../../Services/Listing.service"; // Lấy hàm getProduct
+import { getAllProducts } from "../../Services/Home.service"; // Sử dụng service mới
 import HomeBanner from "../../Components/HomeBanner";
 import HomeCat from "../../Components/HomeCat";
 import ProductItem from "../../Components/ProductItem";
@@ -15,8 +15,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Gọi API để lấy toàn bộ sản phẩm
-        const response = await getProduct(); 
+        const response = await getAllProducts(); // Gọi API từ Home.service
         setProducts(response); // Cập nhật danh sách sản phẩm
       } catch (error) {
         setError("Không thể tải sản phẩm");
