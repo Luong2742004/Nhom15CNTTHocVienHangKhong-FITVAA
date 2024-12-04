@@ -9,8 +9,8 @@ import Footer from "./Components/Footer";
 import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import Listing from "./Pages/Listing";
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
+import SignIn from "./Pages/Login";
+import SignUp from "./Pages/Register";
 
 const MyContext = createContext();
 
@@ -58,7 +58,7 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route exact={true} path="/listing" element={<Listing />} />
-            <Route exact={true} path="/product/:id" element={<ProductDetails/>} />
+            <Route exact={true} path="/product/:productDetailId" element={<ProductDetails/>} />
             <Route exact={true} path="/cart" element={<Cart />} />
             <Route exact={true} path="/signIn" element={<SignIn />} />
             <Route exact={true} path="/signUp" element={<SignUp />} />

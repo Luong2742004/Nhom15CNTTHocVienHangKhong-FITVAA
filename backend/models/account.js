@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
+const bcryptjs = require("bcryptjs")
 
 const accountSchema = mongoose.Schema({
   username: {
@@ -8,12 +9,7 @@ const accountSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
+    required: true
   },
   phone: {
     type: String,
@@ -24,6 +20,17 @@ const accountSchema = mongoose.Schema({
     enum: ["admin", "user"],
     default: "user"
   }
-});
+}, {
+  versionKey: false,
+  timestamps: false
+})
+
+accountSchema.pre("save", function(next){
+  const account = this;
+  if (account.password){
+    account.password = bcryptjs.hashSync(account.password, 10); 
+  }
+  next()
+})
 
 module.exports = mongoose.model("account", accountSchema);

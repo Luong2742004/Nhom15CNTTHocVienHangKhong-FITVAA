@@ -36,7 +36,7 @@ const Header = () => {
                 <div className='part3 d-flex align-items-center ms-auto'>
                   {
                     context.isLogin !== true ? 
-                      <Link to="/signIn"><Button className="btn-blue btn-round me-3">Sign In</Button></Link> :
+                      <Link to="/signIn"><Button className="btn-blue btn-round me-3">Log In</Button></Link> :
                       <Button className='circle me-3'><FaUser /></Button>
                   }
 

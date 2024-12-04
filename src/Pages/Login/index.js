@@ -6,16 +6,14 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleImg from "../../assets/images/googleImg.png";
 import axios from "axios";
-import { toast } from "react-toastify"; // Import toast for notifications
+import { toast } from "react-toastify"; // For displaying notifications
 
-const SignUp = () => {
+const SignIn = () => {
   const context = useContext(MyContext);
   const navigate = useNavigate();
 
-  // State for form fields
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  // State for form inputs
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -28,28 +26,29 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "localhost:5000/api/auth/login", // API URL
         {
-          name,
-          email,
-          phone,
+          username,
           password,
         }
       );
 
-      // Notify success and navigate
-      toast.success("Registration successful!");
-      navigate("/signIn"); // Redirect to sign-in page
+      localStorage.setItem("token", response.data.token);
+      context.setUser(response.data.user);
+      context.setIsLogin(true);
+      toast.success("Login successful!");
+
+      // Navigate to home or dashboard
+      navigate("/dashboard");
     } catch (error) {
-      // Handle errors
-      const errorMessage =
-        error.response?.data?.message || "Registration failed!";
+      // Handle error
+      const errorMessage = error.response?.data?.message || "Login failed!";
       toast.error(errorMessage);
     }
   };
 
   return (
-    <section className="section signInPage signUpPage">
+    <section className="section signInPage">
       <div className="shape-bottom">
         <svg
           fill="#fff"
@@ -59,7 +58,7 @@ const SignUp = () => {
           <path
             className="st0"
             d="M1921,413.1v406.7H0V0h0.4l28.1,598.3c30,74.4,80.8,130.6,152.5,168.6c107.6,57,212.1,40.7,245.7,34.4
-        c22.4-4.2,54.9-13.1,97.5-26.6L1921,400.5V413.1z"
+            c22.4-4.2,54.9-13.1,97.5-26.6L1921,400.5V413.1z"
           ></path>
         </svg>
       </div>
@@ -71,47 +70,18 @@ const SignUp = () => {
           </div>
 
           <form className="mt-0" onSubmit={handleSubmit}>
-            <h2>Sign Up</h2>
+            <h2>Log In</h2>
             <br />
-
-            <div className="row">
-              <div className="col-md-6">
-                <div className="form-group">
-                  <TextField
-                    label="Name"
-                    type="text"
-                    required
-                    variant="standard"
-                    className="w-100"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="form-group">
-                  <TextField
-                    label="Phone No."
-                    type="text"
-                    required
-                    variant="standard"
-                    className="w-100"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
 
             <div className="form-group">
               <TextField
-                label="Email"
-                type="email"
+                label="Username"
+                type="text"
                 required
                 variant="standard"
                 className="w-100"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -131,13 +101,13 @@ const SignUp = () => {
             </Link>
 
             <Button type="submit" className="btn-blue btn-big w-100 mt-3 mb-3">
-              Sign Up
+              Log In
             </Button>
 
             <p className="txt">
-              Already have an account?{" "}
-              <Link to="/signIn" className="border-effect">
-                SignIn
+              Not Registered?{" "}
+              <Link to="/signUp" className="border-effect">
+                Register
               </Link>
             </p>
 
@@ -156,4 +126,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

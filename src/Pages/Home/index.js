@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllProducts } from "../../Services/Home.service"; // Sử dụng service mới
+import { getAllProducts } from "../../Services/Home.service";
 import HomeBanner from "../../Components/HomeBanner";
 import HomeCat from "../../Components/HomeCat";
 import ProductItem from "../../Components/ProductItem";
